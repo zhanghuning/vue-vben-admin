@@ -215,9 +215,14 @@ export function useFormEvents({
     const schema: FormSchema[] = [];
     updateData.forEach((item) => {
       unref(getSchema).forEach((val) => {
-        if (val.field === item.field) {
-          const newSchema = deepMerge(val, item);
-          schema.push(newSchema as FormSchema);
+         if (val.field === item.field) {
+          const hasIndex = schema.findIndex((p) => p.field == val.field);
+          if (hasIndex >= 0) {
+            schema[hasIndex] = deepMerge(deepMerge(schema[hasIndex], val), item);
+          } else {
+            const newSchema = deepMerge(val, item);
+            schema.push(newSchema as FormSchema);
+          }
         } else {
           schema.push(val);
         }
