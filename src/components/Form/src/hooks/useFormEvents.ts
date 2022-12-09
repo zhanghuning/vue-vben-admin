@@ -218,8 +218,10 @@ export function useFormEvents({
         if (val.field === item.field) {
           const newSchema = deepMerge(val, item);
           schema.push(newSchema as FormSchema);
-        } else {
-          schema.push(val);
+        }else {
+          if (!schema.every((sc) => sc.field == item.field)) {
+            schema.push(val);
+          }
         }
       });
     });
