@@ -277,6 +277,7 @@
         set(record, dataKey, value);
         //const record = await table.updateTableData(index, dataKey, value);
         needEmit && table.emit?.('edit-end', { record, index, key: dataKey, value });
+        defaultValueRef.value=value;
         isEdit.value = false;
       }
 
